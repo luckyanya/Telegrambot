@@ -1,16 +1,16 @@
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-public class CmdHelp
-{
-    private Bot bot;
-    private SendMessage sender;
-    CmdHelp(Bot bot)
-    {
+
+public class CmdHelp {
+    private final Bot bot;
+    private final SendMessage sender;
+
+    CmdHelp(Bot bot) {
         this.bot = bot;
         sender = new SendMessage();
     }
-    public synchronized void help(Long chatId) throws TelegramApiException
-    {// вывод help информации
+
+    public synchronized void help(Long chatId) throws TelegramApiException {// вывод help информации
         sender.setChatId(chatId);
         sender.setText("Я еще в разработке, но совсем скоро я смогу многое!");
         bot.execute(sender);

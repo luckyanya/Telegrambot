@@ -27,62 +27,53 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         update.getUpdateId();
-        String[] cmdm = null;
-        String cmd = null;
+        String textCommand = null;
         SendMessage sendMessage = new SendMessage().setChatId(update.getMessage().getChatId()); // создаем SendMessage и получаем сообщения и чат id (ID пользователя в данном случае это одно и тоже )
         sendMessage.enableMarkdown(true); // включаем разметку
-        boolean understend = false; // хранить состояние бота
         String message = update.getMessage().getText();
         Button button = new Button();
-        cmdm = message.split(" ");
-        cmd = cmdm[0];
-        int start = cmd.length();
-        int fin = message.length();
-        fin = fin - start;
-        char[] stringed = new char[fin];
-
+        textCommand = message.split(" ")[0];
         Long chatId = update.getMessage().getChatId();
         //немного отладочной информации
         System.out.println("Id Чата " + " " + update.getMessage().getChatId());
         System.out.println("Имя пользователя " + " " + update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getText());
-        message.getChars(cmd.length(), message.length(), stringed, 0);
+
         try {
-            switch (cmd) {
+            switch (textCommand) {
                 case ("/start"): {
                     this.commander.start(chatId);
-                    understend = true;
                     break;
                 }
                 case ("/help"): {
                     this.commander1.help(chatId);
-                    understend = true;
                     break;
                 }
                 case ("/stats"): {
                     this.commander5.Stats(chatId);
-                    understend = true;
                     break;
                 }
                 case ("/deleteAll"): {
                     this.commander2.DeleteAll(chatId);
-                    understend = true;
                     break;
                 }
                 case ("/newt"): {
-                    this.commander4.СmdNewt(chatId, new String(stringed));
-                    understend = true;
+                    this.commander4.СmdNewt(chatId, message.substring(textCommand.length() + 1));
                     break;
                 }
-            }
-            if (understend == false) {
-                this.commander3.sendToUser(chatId, "Я не знаю, что ответить. Посмотри, что я могу в /help");
-            } else {
-                understend = false;
+                case ("/setLimitCategory"): {
+                    //this.commander4.СmdNewt(chatId,new String(stringed));
+                    break;
+                }
+                default: {
+                    this.commander3.sendToUser(chatId, "Я не знаю, что ответить. Попробуй посмотреть, что я могу в /help");
+                }
+                break;
             }
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
     }
+
     @Override
     public String getBotUsername() {
         return "@ByLTBUDGETbot";

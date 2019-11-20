@@ -1,11 +1,11 @@
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class CmdNewt {
-    private final Bot bot;
-    private final SendMessage sender;
+final class CmdNewCat {
+    private Bot bot;
+    private SendMessage sender;
 
-    CmdNewt(Bot bot) {
+    CmdNewCat(Bot bot) {
         this.bot = bot;
 
         sender = new SendMessage();
@@ -15,10 +15,13 @@ public class CmdNewt {
         String[] cmdm = null;
         String cmd = null;
         cmdm = mes.split("_");
+        String catName = cmdm[0];
+        Float sum = Float.parseFloat(cmdm[1]);
+
         BdSql mysql = new BdSql();
-        mysql.NewTran(ids.toString(), cmdm[1], cmdm[2], cmdm[3], Float.parseFloat(cmdm[0]));
+        mysql.NewCategory(ids.toString(), catName, sum);
         sender.setChatId(ids);
-        sender.setText("Я все записал!");
+        sender.setText("Вы создали категорию " + catName + " c лимитом " + sum);
         try {
             bot.execute(sender);
         } catch (TelegramApiException e) {

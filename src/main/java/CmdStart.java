@@ -1,30 +1,46 @@
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-public class CmdStart
-{
-    private Bot bot;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CmdStart {
+    private final Bot bot;
     private SendMessage sender;
+
     CmdStart(Bot bot) {
         this.bot = bot;
         sender = new SendMessage();
         sender = new SendMessage();
     }
-    public synchronized void start(Long chatId) throws TelegramApiException
-    {
-        Button button = new Button();
-        button.Button(sender,chatId); // кнопки к сообщению
-        UserLogW userlogW = new UserLogW();// пользователи
-        userlogW.write(chatId); // проверим, есть ли пользователь в бд, а если нет - запишем
+
+    public synchronized void start(Long chatId) throws TelegramApiException {
+        Button(sender, chatId);
+        BdSql mysql = new BdSql();
+        mysql.CreateTable(chatId.toString());
         sender.setChatId(chatId);
-        sender.setText("Курсовая работа по разработке телеграм-бота");
+        sender.setText("Курсовая работа по разработке телеграмм бота \n  Работу выполнила \n Git: \n Версия 0.0.1 \n Для ознакомления c возможностями введите \n  ");
         bot.execute(sender);
-        sender.setText("Работу выполнил: Лакеева А.И, Толстова В.Э.");
-        bot.execute(sender);
-        sender.setText("Git:");
-        bot.execute(sender);
-        sender.setText("Версия 0.0.1");
-        bot.execute(sender);
-        sender.setText("Для ознакомления c возможностями введите:  ");
-        bot.execute(sender);
+    }
+
+    public void Button(SendMessage sendMessage, Long chatId) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        sendMessage.setChatId(chatId);
+        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+        List<KeyboardRow> keyboard = new ArrayList<>();
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add(new KeyboardButton("/stats"));
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        keyboardSecondRow.add(new KeyboardButton("/help"));
+        keyboard.add(keyboardFirstRow);
+        keyboard.add(keyboardSecondRow);
+        replyKeyboardMarkup.setKeyboard(keyboard);
+
     }
 }

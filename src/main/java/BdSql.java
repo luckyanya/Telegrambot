@@ -1,11 +1,13 @@
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+
 import java.sql.*;
 import java.util.Date;
 
 public class BdSql {
-
     private final static String URL = "jdbc:mysql://localhost:3306/teleg";
     private final static String USERNAME = "root";
     private final static String PASSWORD = "";
+    private static String SQL = null;
 
     public Connection Connect() {
         Connection connection = null;
@@ -27,7 +29,7 @@ public class BdSql {
         }
         try {
             if (!connection.isClosed()) {
-                System.out.println("Соединение с БД установлено!");
+                System.out.println("Соединение с БД Установлено!");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,7 +44,7 @@ public class BdSql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String SQL = "DROP TABLE id_" + ids;
+        SQL = "DROP TABLE id_" + ids;
         try {
             statement.executeUpdate(SQL);
         } catch (SQLException e) {
@@ -57,14 +59,12 @@ public class BdSql {
     }
 
     public void CreateTable(String ids) {
-
         Statement statement = null;
         try {
             statement = Connect().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         String SQL = "CREATE TABLE IF NOT EXISTS id_" + ids + " " +
                 "(id INTEGER not NULL AUTO_INCREMENT, " +
                 " Catname VARCHAR(50), " +
@@ -88,6 +88,12 @@ public class BdSql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        SQL = "INSERT INTO  Userstable   ( `iduser`) VALUES ('" + ids + "')";
+        try {
+            statement.executeUpdate(SQL);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void Initable() {
@@ -97,7 +103,7 @@ public class BdSql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String SQL = "CREATE TABLE IF NOT EXISTS Userstable " +
+        SQL = "CREATE TABLE IF NOT EXISTS Userstable" +
                 "(id INTEGER not NULL AUTO_INCREMENT, " +
                 " iduser INTEGER not NULL, " +
                 " alllimit FLOAT (50), " +
@@ -107,13 +113,11 @@ public class BdSql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
-    public void newtran(String ids, String Cat, String TranTo, String TranWhy, Float SUM) {
+    public void NewTran(String ids, String Cat, String TranTo, String TranWhy, Float SUM) {
         Date dateNow = new Date();
-        java.text.SimpleDateFormat sdf =
-                new java.text.SimpleDateFormat("yyyy-MM-dd");
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
         String Data = sdf.format(dateNow);
         System.out.println("Дата" + Data);
         Statement statement = null;
@@ -122,15 +126,32 @@ public class BdSql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String SQL = "INSERT INTO  id_" + ids + "t   ( `SUMM`,`TranData`, `Cat`, `TranTo`, `TranWhy`) VALUES ('" + SUM + "','" + Data + "', '" + Cat + "', '" + TranTo + "', '" + TranWhy + "')";
+        SQL = "INSERT INTO  id_" + ids + "t   ( `SUMM`,`TranData`, `Cat`, `TranTo`, `TranWhy`) VALUES ('" + SUM + "','" + Data + "', '" + Cat + "', '" + TranTo + "', '" + TranWhy + "')";
         try {
             statement.executeUpdate(SQL);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
-    public String[] GettableT(String ids) throws SQLException {
+    public void NewCategory(String ids, String catName, Float catLimit) {
+        Statement statement = null;
+        try {
+            statement = Connect().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        SQL = "INSERT INTO  id_" + ids + "t   ( `Catname`,`CatLimit`) VALUES ('" + catName + "', '" + catLimit + "')";
+        try {
+            statement.executeUpdate(SQL);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public String[] GetTableT(String ids) throws SQLException {
         int[] sqlid = null;
         float[] sqlSum = null;
         String[] sqlData = null;
@@ -144,7 +165,7 @@ public class BdSql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String SQL = "SELECT id,SUMM,TranData,Cat,TranTo,TranWhy FROM  id_" + ids + "t";
+        SQL = "SELECT id,SUMM,TranData,Cat,TranTo,TranWhy FROM  id_" + ids + "t";
         try {
             statement.executeQuery(SQL);
         } catch (SQLException e) {
@@ -153,23 +174,22 @@ public class BdSql {
         final ResultSet rec;
         int rowCount = 1;
         try {
-
             rowCount = 1;
             rec = statement.getResultSet();
             while (rec.next()) {
                 rowCount++;
             }
-            rec.beforeFirst(); //ставим на первый указатель
-            int count = rowCount - 1;
+            rec.beforeFirst();
+            int countStr = rowCount - 1;
             rowCount = 1;
-            sqlid = new int[count];
-            sqlSum = new float[count];
-            sqlData = new String[count];
-            sqlCat = new String[count];
-            sqlTranTo = new String[count];
-            sqlTranWhy = new String[count];
-            outs = new String[count + 1];
-            outs[0] = "Я нашел " + count + " транзакций";
+            sqlid = new int[countStr];
+            sqlSum = new float[countStr];
+            sqlData = new String[countStr];
+            sqlCat = new String[countStr];
+            sqlTranTo = new String[countStr];
+            sqlTranWhy = new String[countStr];
+            outs = new String[countStr + 1];
+            outs[0] = "Я нашел " + countStr + " транзакций";
             while (rec.next()) {
                 sqlid[rowCount - 1] = rec.getInt(1);
                 sqlSum[rowCount - 1] = rec.getFloat(2);

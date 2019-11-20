@@ -1,17 +1,16 @@
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class CmdDelete
-{
-    private Bot bot;
-    private SendMessage sender;
-    CmdDelete(Bot bot)
-    {
+public class CmdDelete {
+    private final Bot bot;
+    private final SendMessage sender;
+
+    CmdDelete(Bot bot) {
         this.bot = bot;
         sender = new SendMessage();
     }
-    public void DeleteAll(Long ids)
-    {
+
+    public void DeleteAll(Long ids) {
         BdSql mysql = new BdSql();
         mysql.DeleteTableA(ids.toString());
         sender.setChatId(ids);
