@@ -15,9 +15,9 @@ public class telebot {
         TelegramBotsApi telegram = new TelegramBotsApi(); // создание telegram
         try {
             DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class); // обьявление botOptions для настройки подключения к серверам и взаимодействия с телеграм API
-            // botOptions.setProxyHost("178.213.130.101");
-            // botOptions.setProxyPort(52658);
-            // botOptions.setProxyType(DefaultBotOptions.ProxyType.HTTP);
+             botOptions.setProxyHost("178.213.130.101");
+             botOptions.setProxyPort(52658);
+             botOptions.setProxyType(DefaultBotOptions.ProxyType.HTTP);
             Bot bot = new Bot(botOptions);
             telegram.registerBot(bot);
         } catch (TelegramApiRequestException e) {

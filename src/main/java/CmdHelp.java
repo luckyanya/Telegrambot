@@ -18,16 +18,11 @@ public class CmdHelp {
         bot.execute(sender);
         sender.setText("Мои команды:");
         bot.execute(sender);
-        sender.setText("Чтобы записать транзакцию, введи /newt потраченная сумма_категория_где потратил_назначение");
+        sender.setText("Чтобы записать транзакцию, введи /newt");
         bot.execute(sender);
         sender.setText("Пример /newt 100500_Развлечение_Cinemapark_Просмотр фильма");
         bot.execute(sender);
-        sender.setText("Чтобы вывести свою статистику, введите /stats (пока не доделано, выводит все транзакции)");
-        bot.execute(sender);
-        sender.setText("Чтобы вывести свою статистику за день, введите /stats_day");
-        bot.execute(sender);
-        sender.setText("Чтобы вывести свою статистику за выбранный период  /stats_date_10.10.10_to_11.10.10");
-        bot.execute(sender);
+        sender.setText("Чтобы вывести свою статистику, введите /stats");
         sender.setText("Чтобы удалить свою информацию введите /deleteAll *при вводе происходит полное и безвозвратное удаление ваших данных. Чтобы начать пользоваться ботом после этих действий, нужно ввести команду /start ");
         bot.execute(sender);
     }

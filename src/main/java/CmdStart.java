@@ -22,7 +22,7 @@ public class CmdStart {
         BdSql mysql = new BdSql();
         mysql.CreateTable(chatId.toString());
         sender.setChatId(chatId);
-        sender.setText("Курсовая работа по разработке телеграмм бота \n  Работу выполнила \n Git: \n Версия 0.0.1 \n Для ознакомления c возможностями введите \n  ");
+        sender.setText("Курсовая работа по разработке телеграм-бота \n  Работу выполнила \n Git: \n Версия 0.0.1 \n Для ознакомления c возможностями введите \n  ");
         bot.execute(sender);
     }
 
@@ -38,9 +38,14 @@ public class CmdStart {
         keyboardFirstRow.add(new KeyboardButton("/stats"));
         KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add(new KeyboardButton("/help"));
+        KeyboardRow keyboardThirdRow = new KeyboardRow();
+        keyboardThirdRow.add(new KeyboardButton("/newt"));
+        KeyboardRow keyboardFourthRow = new KeyboardRow();
+        keyboardFourthRow.add(new KeyboardButton("/newCat"));
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);
+        keyboard.add(keyboardThirdRow);
+        keyboard.add(keyboardFourthRow);
         replyKeyboardMarkup.setKeyboard(keyboard);
-
     }
 }
