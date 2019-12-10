@@ -1,3 +1,5 @@
+/*package TelegramBot;
+
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -15,4 +17,4 @@ public class SendToUser {
         sender.setText(txt);
         bot.execute(sender);
     }
-}
+}*/

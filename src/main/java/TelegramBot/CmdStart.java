@@ -1,3 +1,5 @@
+package TelegramBot;
+
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -7,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import java.util.ArrayList;
 import java.util.List;
 
-public class CmdStart {
+final class CmdStart {
     private final Bot bot;
     private SendMessage sender;
 
@@ -17,16 +19,16 @@ public class CmdStart {
         sender = new SendMessage();
     }
 
-    public synchronized void start(Long chatId) throws TelegramApiException {
+    public void start(Long chatId) throws TelegramApiException {
         Button(sender, chatId);
         BdSql mysql = new BdSql();
         mysql.CreateTable(chatId.toString());
         sender.setChatId(chatId);
-        sender.setText("Курсовая работа по разработке телеграм-бота \n  Работу выполнила \n Git: \n Версия 0.0.1 \n Для ознакомления c возможностями введите \n  ");
+        sender.setText("Курсовая работа по разработке телеграм-бота \nРаботу выполнил: Лакеева А.И., Толстова В.Э., 2-ПМИ-4 \nДля ознакомления c возможностями введите \n/help  ");
         bot.execute(sender);
     }
 
-    public void Button(SendMessage sendMessage, Long chatId) {
+    public static void Button(SendMessage sendMessage, Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         sendMessage.setChatId(chatId);
         sendMessage.setReplyMarkup(replyKeyboardMarkup);

@@ -1,3 +1,5 @@
+package TelegramBot;
+
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -10,7 +12,7 @@ public class Bot extends TelegramLongPollingBot {
     private CmdHelp commander1;
     private CmdDelete commander2;
     private CmdEdit commander3;
-    private CmdNewt commander4;
+    private CmdNewT commander4;
     private CmdStats commander5;
     private CmdNewCat commander6;
 
@@ -21,7 +23,7 @@ public class Bot extends TelegramLongPollingBot {
         this.commander1 = new CmdHelp(this);// обработчик команды /help
         this.commander2 = new CmdDelete(this);// обработчик команды /delete и /deleteall
         this.commander3 = new CmdEdit(this);// упрощенная отправка сообщений
-        this.commander4 = new CmdNewt(this);// упрощенная отправка сообщений
+        this.commander4 = new CmdNewT(this);// упрощенная отправка сообщений
         this.commander5 = new CmdStats(this);// упрощенная отправка сообщений
         this.commander6 = new CmdNewCat(this);// упрощенная отправка сообщений
     }
@@ -34,7 +36,6 @@ public class Bot extends TelegramLongPollingBot {
         SendMessage sendMessage = new SendMessage().setChatId(update.getMessage().getChatId()); // создаем SendMessage и получаем сообщения и чат id (ID пользователя в данном случае это одно и тоже )
         sendMessage.enableMarkdown(true); // включаем разметку
         String message = update.getMessage().getText();
-        //Button button = new Button();
         textCommand = message.split(" ")[0];
         Long chatId = update.getMessage().getChatId();
         //немного отладочной информации
@@ -86,7 +87,7 @@ public class Bot extends TelegramLongPollingBot {
                     break;
                 }
                 case ("/newt"): {
-                    this.commander4.СmdNewt(chatId, message, UserStatus);
+                    this.commander4.СmdNewT(chatId, message, UserStatus);
                     break;
                 }
                 case ("/edit"): {
@@ -114,4 +115,9 @@ public class Bot extends TelegramLongPollingBot {
         String TOKEN = System.getenv("TELEGRAM_BOT_T");
         return TOKEN;
     }
+
+
+
+
+
 }
