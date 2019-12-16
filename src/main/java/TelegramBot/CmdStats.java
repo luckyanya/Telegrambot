@@ -45,7 +45,6 @@ final class CmdStats {
                             sender.setText(outStr);
                             bot.execute(sender);
                             break;
-
                         }
                         case ("/date"): {
                             sender.setText("Вы попросили вывести статистику за промежуток времени " + mes.split(" ")[1] + "По " + mes.split(" ")[2]);
