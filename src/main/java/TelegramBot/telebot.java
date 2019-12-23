@@ -9,11 +9,11 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 public class telebot {
     public static void main(String[] args) {
         BdSql mysql = new BdSql();
-        mysql.InitTable();
+        mysql.initTable();
         ApiContextInitializer.init(); // начало инициализации
         TelegramBotsApi telegram = new TelegramBotsApi();
         try {
-            DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class); // обьявление botOptions для настройки подключения к серверам и взаимодействия с телеграм API
+            DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
             //botOptions.setProxyHost("178.213.130.101");
             //botOptions.setProxyPort(52658);
             //botOptions.setProxyType(DefaultBotOptions.ProxyType.HTTP);

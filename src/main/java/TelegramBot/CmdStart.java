@@ -19,16 +19,7 @@ final class CmdStart {
         sender = new SendMessage();
     }
 
-    public void start(Long chatId) throws TelegramApiException {
-        Button(sender, chatId);
-        BdSql mysql = new BdSql();
-        mysql.CreateTable(chatId.toString());
-        sender.setChatId(chatId);
-        sender.setText("Курсовая работа по разработке телеграм-бота \nРаботу выполнил: Лакеева А.И., Толстова В.Э., 2-ПМИ-4 \nДля ознакомления c возможностями введите \n/help  ");
-        bot.execute(sender);
-    }
-
-    public static void Button(SendMessage sendMessage, Long chatId) {
+    public static void button(SendMessage sendMessage, Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         sendMessage.setChatId(chatId);
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
@@ -44,10 +35,22 @@ final class CmdStart {
         keyboardThirdRow.add(new KeyboardButton("/newt"));
         KeyboardRow keyboardFourthRow = new KeyboardRow();
         keyboardFourthRow.add(new KeyboardButton("/newCat"));
+        KeyboardRow keyboardFiveRow = new KeyboardRow();
+        keyboardFiveRow.add(new KeyboardButton("/edit"));
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);
         keyboard.add(keyboardThirdRow);
         keyboard.add(keyboardFourthRow);
+        keyboard.add(keyboardFiveRow);
         replyKeyboardMarkup.setKeyboard(keyboard);
+    }
+
+    public void start(Long chatId) throws TelegramApiException {
+        button(sender, chatId);
+        BdSql mysql = new BdSql();
+        mysql.createTable(chatId.toString());
+        sender.setChatId(chatId);
+        sender.setText("Курсовая работа по разработке телеграм-бота \nРаботу выполнил: Лакеева А.И., Толстова В.Э., 2-ПМИ-4 \nДля ознакомления c возможностями введите \n/help  ");
+        bot.execute(sender);
     }
 }

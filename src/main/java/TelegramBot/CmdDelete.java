@@ -12,9 +12,9 @@ final class CmdDelete {
         sender = new SendMessage();
     }
 
-    public void DeleteAll(Long ids) {
+    public void deleteAll(Long ids) {
         BdSql mysql = new BdSql();
-        mysql.DeleteTableA(ids.toString());
+        mysql.deleteTable(ids.toString());
         sender.setChatId(ids);
         sender.setText("Я все-все удалил! Пока, дорогой друг!");
         try {
@@ -23,5 +23,4 @@ final class CmdDelete {
             e.printStackTrace();
         }
     }
-
 }
